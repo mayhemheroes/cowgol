@@ -1,0 +1,7 @@
+project: rnshah9/playground
+target: playground
+tests: null
+
+cmds:
+  - cmd: /repo/bin/cowfe-80386.nncgen.exe @@ out
+    filepath: /test.cow
