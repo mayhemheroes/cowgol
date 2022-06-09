@@ -1,7 +1,6 @@
-project: rnshah9/mayhem-cowgol
-target: nncgen
-tests: null
+project: cowgol
+target: cowfe-80386-nncgen-exe
 
 cmds:
-  - cmd: /repo/bin/cowfe-80386.nncgen.exe @@ out
+  - cmd: /repo/bin/cowfe-80386.nncgen.exe /test.cow /dev/null
     filepath: /test.cow
