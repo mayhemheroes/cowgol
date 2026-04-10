@@ -1,7 +1,7 @@
 project: cowgol
-target: cowfe-80386-nncgen-exe
+target: cowfe-for-80386-with-nncgen
 duration: 90
 
 cmds:
-  - cmd: /repo/bin/cowfe-80386.nncgen.exe /test.cow /dev/null
+  - cmd: /repo/bin/cowfe-for-80386-with-nncgen /test.cow /dev/null
     filepath: /test.cow
