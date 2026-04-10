@@ -1,5 +1,6 @@
 project: cowgol
 target: cowfe-80386-nncgen-exe
+duration: 90
 
 cmds:
   - cmd: /repo/bin/cowfe-80386.nncgen.exe /test.cow /dev/null
