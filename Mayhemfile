@@ -1,0 +1,5 @@
+project: cowgol
+target: cowfe-80386-nncgen-exe
+
+cmds:
+  - cmd: /cowfe-80386.nncgen.exe @@ /dev/null
