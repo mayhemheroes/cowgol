@@ -1,0 +1,25 @@
+project: cowgol
+target: cowfe-for-80386-with-nncgen
+
+# File-input (CLI) target: feed the fuzz bytes as a Cowgol (.cow) source file to the cowgol
+# FRONT END. cowfe-for-80386-with-nncgen is the front-end stage of the bootstrapped cowgol
+# compiler for the 80386 toolchain: it lexes and PARSES a .cow source (lexer + lemon-generated
+# parser + namespace/symbol/type/expression analysis) and emits the binary midcode (.cob). The
+# whole front end runs on the input — this is the natural fuzz surface of a compiler. Not libFuzzer:
+# the fuzz surface is the compiler on a source file. @@ is the input-file placeholder.
+#
+# Ported from the OLD integration's file-input target (old invocation: cowfe-for-80386-with-nncgen
+# on /test.cow with /dev/null output). Same binary, same target name. We add -I include paths so a corpus that
+# `include`s the cowgol runtime headers parses the full program rather than failing at the first
+# include; self-contained .cow sources (no includes) parse regardless. The .cob output goes to
+# /dev/null — we fuzz the front end, not the file write.
+cmds:
+  - cmd: /mayhem/cowfe-for-80386-with-nncgen -I/mayhem/rt/cgen/ -I/mayhem/rt/ -I/mayhem @@ /dev/null
+    # cowfe is a short-lived compiler that allocates from an arena it never frees by design (it
+    # relies on process exit to reclaim memory), so LeakSanitizer would report benign "leaks" on
+    # nearly every input and flood the fuzzer. build.sh bakes detect_leaks=0 into the binary via a
+    # weak __asan_default_options; this env documents/reinforces it. ASan's overflow/UAF checks and
+    # all of UBSan stay on and halting.
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/cowfe-for-80386-with-nncgen/testsuite

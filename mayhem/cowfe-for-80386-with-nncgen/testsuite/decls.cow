@@ -1,0 +1,11 @@
+record Point is
+  x: uint8;
+  y: uint8;
+end record;
+
+sub Add(a: uint8, b: uint8): (r: uint8) is
+  r := a + b;
+end sub;
+
+var p: Point;
+p.x := Add(1, 2);
